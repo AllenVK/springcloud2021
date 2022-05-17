@@ -1,0 +1,33 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    alibaba:
+      seata:
+        #自定义事务组名称需要与seata-server中的对应
+        tx-service-group: paul_tx_group
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    #如果是使用的mysql8.0及以上版本，这里需要使用这个驱动，file.conf里面也是，
+    #连接seata的mysql-connector-java也需要是8.0的（放在seata的lib包下，同时删除旧版本连接驱动）
+    driver-class-name: com.mysql.cj.jdbc.Driver # 注意加 cj
+    url: jdbc:mysql://localhost:3306/seata_order
+    username: root
+    password: 123456
+
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml

@@ -1,0 +1,35 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name:  cloud-config-center #注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          #uri: git@github.com:AllenVK/springcloud-config-paul-2020.git #访问不了git@github.com，用下面的
+          uri: https://github.com/AllenVK/springcloud-config-paul-2020.git #GitHub上面的git仓库名字
+          ####搜索目录
+          search-paths:
+            - springcloud-config-paul-2020
+          skip-ssl-validation: true
+          # 如果无法获取到 github 上面的配置信息，尝试把账号和密码加上
+          username: 1511704251@qq.com
+          password: a1511704251.
+      ####读取分支
+      label: master
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+
+##rabbitmq相关配置,暴露bus刷新配置的端点
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'
